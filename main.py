@@ -20,15 +20,22 @@ pt = ["pt", "com.bz"]
 es = ["es", "com", "com.mx"]
 
 #def statments
-def inputs():
+def inputxt():
     return input("What would you like the bot to say?  ")
 
+def inputlen():
+    x = "len"
+    while x not in lan:
+        x = input("Which language would you like? (en, fr, pt, es)")
+    return x
+
 #Get the user input
-txt = inputs()
+txt = inputxt()
+langu = inputlen()
 
-#Robot says thing
-tts = gTTS(text=txt, lang=lan[0], tld=en[0], slow=False)
+#Robot Funny Stuff
+tts = gTTS(text=txt, lang=langu, tld=en[0], slow=False)
 
+#Makes the file playable
 tts.save("example.mp3")
-
 os.system("example.mp3")
