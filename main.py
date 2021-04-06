@@ -1,14 +1,12 @@
 #imports
 from gtts import gTTS
 import os
+import random as rng
 import tkinter as tk
 
 #global lists
 global lan
-global en
-global fr
-global pt
-global es
+global acclist
 
 #Creates the stuff used in tk
 root = tk.Tk()
@@ -24,14 +22,16 @@ midframe.pack()
 bottomframe = tk.Frame(root)
 bottomframe.pack()
 
-#languate picker list
+#languate list
 lan = ["en", "fr", "pt", "es"]
 
-#accent picker list
+#accent list
 en = ["com", "com.au", "co.uk", "ca", "co.in", "ie", "co.za"]
 fr = ["fr", "ca"]
 pt = ["pt", "com.bz"]
 es = ["es", "com", "com.mx"]
+
+acclist =[en, fr, pt, es]
 
 #Def Statements
 def converter():
@@ -39,8 +39,34 @@ def converter():
     txt = txtx.get()
     selection = var.get()
     
+    #selects a random accent based on length of list
+    c = 0
+    for e in acclist:
+        if lan[selection] == "en" and c == 0:
+            aclen = len(e)
+            ranac = rng.randint(1, aclen)
+            ranac -= 1
+            break
+        elif lan[selection] == "fr" and c == 1:
+            aclen = len(e)
+            ranac = rng.randint(1, aclen)
+            ranac -= 1
+            break
+        elif lan[selection] == "pt" and c == 2:
+            aclen = len(e)
+            ranac = rng.randint(1, aclen)
+            ranac -= 1
+            break
+        elif lan[selection] == "es" and c == 3:
+            aclen = len(e)
+            ranac = rng.randint(1, aclen)
+            ranac -= 1
+            break
+        c+=1
+    acchoice = acclist[c]
+        
     #Robot Funny Stuff
-    tts = gTTS(text=txt, lang=lan[selection], slow=False)
+    tts = gTTS(text=txt, lang=lan[selection], tld=acchoice[ranac], slow=False)
     tts.save("example.mp3")
     os.system("example.mp3")
 
