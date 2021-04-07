@@ -3,6 +3,8 @@ from gtts import gTTS
 import os
 import random as rng
 import tkinter as tk
+from mutagen.mp3 import MP3
+import time
 
 #global lists
 global lan
@@ -10,7 +12,7 @@ global acclist
 
 #Creates the stuff used in tk
 root = tk.Tk()
-root.geometry("400x250")
+root.geometry("400x300")
 
 #creates frames
 frame = tk.Frame(root)
@@ -34,41 +36,51 @@ es = ["es", "com", "com.mx"]
 acclist =[en, fr, pt, es]
 
 #Def Statements
-def converter():
-    #Get the user input
-    txt = txtx.get()
-    selection = var.get()
-    
-    #selects a random accent based on length of list
-    c = 0
-    for e in acclist:
-        if lan[selection] == "en" and c == 0:
-            aclen = len(e)
-            ranac = rng.randint(1, aclen)
-            ranac -= 1
-            break
-        elif lan[selection] == "fr" and c == 1:
-            aclen = len(e)
-            ranac = rng.randint(1, aclen)
-            ranac -= 1
-            break
-        elif lan[selection] == "pt" and c == 2:
-            aclen = len(e)
-            ranac = rng.randint(1, aclen)
-            ranac -= 1
-            break
-        elif lan[selection] == "es" and c == 3:
-            aclen = len(e)
-            ranac = rng.randint(1, aclen)
-            ranac -= 1
-            break
-        c+=1
-    acchoice = acclist[c]
-        
-    #Robot Funny Stuff
-    tts = gTTS(text=txt, lang=lan[selection], tld=acchoice[ranac], slow=False)
-    tts.save("example.mp3")
-    os.system("example.mp3")
+def converter(runorplay):
+    if runorplay == "run":
+        #Get the user input
+        txt = txtx.get()
+        txtx.delete(0,tk.END)
+        selection = var.get()
+
+        #selects a random accent based on length of list
+        c = 0
+        for e in acclist:
+            if lan[selection] == "en" and c == 0:
+                aclen = len(e)
+                ranac = rng.randint(1, aclen)
+                ranac -= 1
+                break
+            elif lan[selection] == "fr" and c == 1:
+                aclen = len(e)
+                ranac = rng.randint(1, aclen)
+                ranac -= 1
+                break
+            elif lan[selection] == "pt" and c == 2:
+                aclen = len(e)
+                ranac = rng.randint(1, aclen)
+                ranac -= 1
+                break
+            elif lan[selection] == "es" and c == 3:
+                aclen = len(e)
+                ranac = rng.randint(1, aclen)
+                ranac -= 1
+                break
+            c+=1
+        acchoice = acclist[c]
+
+        #Robot Funny Stuff
+        try:
+            tts = gTTS(text=txt, lang=lan[selection], tld=acchoice[ranac], slow=False)
+            tts.save("example.mp3")
+            os.system("example.mp3")
+        except:
+            EOFError
+    elif runorplay != "run":
+        try:
+            os.system("example.mp3")
+        except:
+            EOFError
 
 #frame parts
 #Lable asking what they want the bot to say
@@ -85,7 +97,10 @@ R3 = tk.Radiobutton(midframe, text="Portugeese", variable=var, value="2")
 R4 = tk.Radiobutton(midframe, text="Spanish", variable=var, value="3")
 
 #Button to tell the program to run and collect all of the data and play the audio
-returntxt = tk.Button(bottomframe, text="Start", command=converter)
+returntxt = tk.Button(bottomframe, text="Start", command=lambda : converter("run"))
+
+#Plays previous input
+playprev = tk.Button(bottomframe, text="Play Previous", command=lambda : converter("play"))
 
 #packs the parts
 #Label 1 pack
@@ -101,6 +116,7 @@ R3.pack()
 R4.pack()
 #Button pack
 returntxt.pack()
+playprev.pack()
 
 #Creates the Window
 root.mainloop()
