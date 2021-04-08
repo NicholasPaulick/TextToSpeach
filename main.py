@@ -12,6 +12,7 @@ global acclist
 
 #Creates the stuff used in tk
 root = tk.Tk()
+root.title("TextToSpeach")
 root.geometry("400x300")
 
 #creates frames
