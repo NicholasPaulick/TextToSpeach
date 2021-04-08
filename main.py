@@ -9,6 +9,9 @@ import time
 #global lists
 global lan
 global acclist
+global prewlist
+global prellist
+global prealist
 
 #Creates the stuff used in tk
 root = tk.Tk()
@@ -25,6 +28,11 @@ midframe.pack()
 bottomframe = tk.Frame(root)
 bottomframe.pack()
 
+#prevous info list
+prewlist = []
+prellist = []
+prealist = []
+
 #languate list
 lan = ["en", "fr", "pt", "es"]
 
@@ -34,7 +42,7 @@ fr = ["fr", "ca"]
 pt = ["pt", "com.bz"]
 es = ["es", "com", "com.mx"]
 
-acclist =[en, fr, pt, es]
+acclist = [en, fr, pt, es]
 
 #Def Statements
 def converter(runorplay):
@@ -70,6 +78,11 @@ def converter(runorplay):
             c+=1
         acchoice = acclist[c]
 
+        #prevplaystuff
+        prewlist.insert(0, txt)
+        prellist.insert(0, lan[selection])
+        prealist.insert(0, acchoice[ranac])
+
         #Robot Funny Stuff
         try:
             tts = gTTS(text=txt, lang=lan[selection], tld=acchoice[ranac], slow=False)
@@ -77,11 +90,16 @@ def converter(runorplay):
             os.system("example.mp3")
         except:
             EOFError
-    elif runorplay != "run":
-        try:
+        
+def playprev(old):
+    if len(prewlist) == 1:
+        if old == 0:
             os.system("example.mp3")
-        except:
-            EOFError
+    elif len(prewlist) > 1:
+        if old != 0:
+            tts = gTTS(text=prewlist[old], lang=prellist[old], tld=prealist[old], slow=False)
+            tts.save("example.mp3")
+            os.system("example.mp3")
 
 #frame parts
 #Lable asking what they want the bot to say
@@ -100,8 +118,9 @@ R4 = tk.Radiobutton(midframe, text="Spanish", variable=var, value="3")
 #Button to tell the program to run and collect all of the data and play the audio
 returntxt = tk.Button(bottomframe, text="Start", command=lambda : converter("run"))
 
-#Plays previous input
-playprev = tk.Button(bottomframe, text="Play Previous", command=lambda : converter("play"))
+#Plays previous inputs
+playprevf = tk.Button(bottomframe, text="Play Last", command=lambda : playprev(0))
+playprevs = tk.Button(bottomframe, text="Play two ago", command=lambda : playprev(1))
 
 #packs the parts
 #Label 1 pack
@@ -117,7 +136,8 @@ R3.pack()
 R4.pack()
 #Button pack
 returntxt.pack()
-playprev.pack()
+playprevf.pack()
+playprevs.pack()
 
 #Creates the Window
 root.mainloop()
