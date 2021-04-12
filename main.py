@@ -3,8 +3,6 @@ from gtts import gTTS
 import os
 import random as rng
 import tkinter as tk
-from mutagen.mp3 import MP3
-import time
 
 #global lists
 global lan
