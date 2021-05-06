@@ -94,7 +94,11 @@ def playprev(old):
         if old == 0:
             os.system("example.mp3")
     elif len(prewlist) > 1:
-        if old != 0:
+        if old == 1:
+            tts = gTTS(text=prewlist[old], lang=prellist[old], tld=prealist[old], slow=False)
+            tts.save("example.mp3")
+            os.system("example.mp3")
+        elif old == 2:
             tts = gTTS(text=prewlist[old], lang=prellist[old], tld=prealist[old], slow=False)
             tts.save("example.mp3")
             os.system("example.mp3")
@@ -119,6 +123,7 @@ returntxt = tk.Button(bottomframe, text="Start", command=lambda : converter("run
 #Plays previous inputs
 playprevf = tk.Button(bottomframe, text="Play Last", command=lambda : playprev(0))
 playprevs = tk.Button(bottomframe, text="Play two ago", command=lambda : playprev(1))
+playprevs = tk.Button(bottomframe, text="Play three ago", command=lambda : playprev(2))
 
 #packs the parts
 #Label 1 pack
