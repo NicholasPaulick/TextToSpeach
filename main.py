@@ -123,7 +123,7 @@ returntxt = tk.Button(bottomframe, text="Start", command=lambda : converter("run
 #Plays previous inputs
 playprevf = tk.Button(bottomframe, text="Play Last", command=lambda : playprev(0))
 playprevs = tk.Button(bottomframe, text="Play two ago", command=lambda : playprev(1))
-playprevs = tk.Button(bottomframe, text="Play three ago", command=lambda : playprev(2))
+playprevt = tk.Button(bottomframe, text="Play three ago", command=lambda : playprev(2))
 
 #packs the parts
 #Label 1 pack
@@ -141,6 +141,7 @@ R4.pack()
 returntxt.pack()
 playprevf.pack()
 playprevs.pack()
+playprevt.pack()
 
 #Creates the Window
 root.mainloop()
