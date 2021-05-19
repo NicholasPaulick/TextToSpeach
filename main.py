@@ -90,9 +90,10 @@ def converter(runorplay):
             EOFError
         
 def playprev(old):
-    if len(prewlist) == 1:
-        if old == 0:
-            os.system("example.mp3")
+    if old == 0:
+        tts = gTTS(text=prewlist[old], lang=prellist[old], tld=prealist[old], slow=False)
+        tts.save("example.mp3")
+        os.system("example.mp3")
     elif len(prewlist) > 1:
         if old == 1:
             tts = gTTS(text=prewlist[old], lang=prellist[old], tld=prealist[old], slow=False)
